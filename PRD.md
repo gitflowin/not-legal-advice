@@ -63,6 +63,7 @@ The extension runs lightweight, client-side heuristics on every page to determin
 - When policy content is detected, the extension icon updates to indicate a policy is present (e.g., badge indicator)
 - Does NOT automatically call the LLM — waits for user interaction to keep costs at zero for detection
 - Detection confidence score determines badge state: high confidence shows an alert badge, low confidence shows a subtle indicator
+- **Link following:** When a signup/registration page links to an external policy URL (e.g., `/privacy-policy`), the extension fetches and queues that linked page's text for analysis — the badge triggers from the current page's form detection, but the text analyzed is pulled from the linked policy URL
 
 ### F2: Policy Analysis (LLM)
 
@@ -149,7 +150,9 @@ User clicks extension icon
   → Popup opens, shows detected policy info
   → User clicks "Analyze"
   → Content script extracts full policy text
-  → Text is chunked if necessary (for token limits)
+  → Text is chunked if necessary (max ~60k tokens per chunk; split at paragraph/section boundaries)
+  → Each chunk analyzed independently with shared system prompt
+  → Results merged client-side: grades averaged by chunk length, red flags deduplicated by severity, summaries condensed
   → API call to LLM with structured prompt
   → Parse structured response (JSON)
   → Render results in popup
@@ -167,6 +170,7 @@ User clicks extension icon
 - Secondary: OpenAI Chat Completions API
 - Structured output via system prompt requesting JSON response
 - Prompt engineered to return consistent rating schema
+- **Multilingual:** Policy text is sent to the LLM as-is, regardless of language. Claude and GPT-4 class models handle most major languages natively. No language detection or translation step is performed.
 
 ---
 
@@ -203,9 +207,11 @@ Given the irony of a privacy tool that could itself be invasive, this section is
 
 ---
 
-## Open Questions
+## Open Questions (Resolved)
 
-1. Should the extension attempt to follow links to external policy pages (e.g., a signup form links to `/privacy-policy`), or only analyze what's on the current page?
-2. What is the maximum policy length we should support before truncation or chunking?
-3. Should we show a "privacy score" comparison to well-known services (e.g., "This policy is more invasive than Gmail but less than TikTok")?
-4. How should we handle policies in languages other than English?
+| # | Question | Decision |
+|---|----------|----------|
+| 1 | Follow external policy links? | **Yes** — when a signup page links to a policy URL, fetch and analyze that page's text |
+| 2 | Policy length / token limits? | **Chunk & merge** — split long policies at semantic boundaries, analyze each chunk, merge results client-side |
+| 3 | Comparative scores vs. known services? | **No** — standalone A–F letter grade only for MVP; comparisons deferred to post-MVP |
+| 4 | Non-English policies? | **Pass through as-is** — Claude and GPT-4 class models handle major languages natively; no translation step |
