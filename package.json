@@ -1,25 +1,25 @@
 {
-  "name": "not-legal-advice",
-  "version": "0.1.0",
-  "description": "Chrome extension that analyzes privacy policies and terms of service using LLMs",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "dev": "wxt",
-    "build": "wxt build",
-    "zip": "wxt zip",
-    "test": "vitest run",
-    "test:watch": "vitest"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
-  "devDependencies": {
-    "@anthropic-ai/sdk": "^0.78.0",
-    "@preact/preset-vite": "^2.10.3",
-    "preact": "^10.28.4",
-    "typescript": "^5.9.3",
-    "vitest": "^4.0.18",
-    "wxt": "^0.20.18"
-  }
+    "name": "not-legal-advice",
+    "version": "0.1.0",
+    "description": "Chrome extension that analyzes privacy policies and terms of service using LLMs",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "wxt",
+        "build": "wxt build",
+        "zip": "wxt zip",
+        "test": "vitest run",
+        "test:watch": "vitest"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "MIT",
+    "devDependencies": {
+        "@anthropic-ai/sdk": "^0.78.0",
+        "@preact/preset-vite": "^2.10.3",
+        "preact": "^10.28.4",
+        "typescript": "^5.9.3",
+        "vitest": "^4.0.18",
+        "wxt": "^0.20.18"
+    }
 }
