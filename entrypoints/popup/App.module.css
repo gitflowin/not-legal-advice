@@ -7,11 +7,29 @@
 .header {
     padding: var(--space-4);
     border-bottom: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .title {
     font-size: var(--font-size-base);
     font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+}
+
+.settingsToggle {
+    background: none;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-1) var(--space-3);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
+    cursor: pointer;
+}
+
+.settingsToggle:hover {
+    background: var(--color-bg-secondary);
     color: var(--color-text-primary);
 }
 
@@ -177,4 +195,44 @@
 .errorText {
     color: var(--color-danger);
     font-weight: var(--font-weight-medium);
+}
+
+/* Settings */
+.settingsView {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.fieldLabel {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+}
+
+.fieldInput,
+.fieldSelect {
+    padding: var(--space-2);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    background: var(--color-bg-primary);
+    color: var(--color-text-primary);
+}
+
+.fieldInput:focus,
+.fieldSelect:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: -1px;
+}
+
+.fieldHint {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
 }
